@@ -1,4 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  InternalServerErrorException,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -7,7 +14,12 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  createUser(@Body() createBody: CreateUserDto) {
-    return this.usersService.createUser(createBody);
+  async createUser(@Body() createBody: CreateUserDto) {
+    const result = await this.usersService.createUser(createBody);
+    if (result.ok) {
+      return;
+    } else {
+      throw new HttpException(result.error, result.htmlStatus);
+    }
   }
 }
