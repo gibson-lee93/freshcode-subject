@@ -1,2 +1,4 @@
 node_modules
 dist
+freshcode
+.DS_STORE
