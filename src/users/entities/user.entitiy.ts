@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CoreEntity } from 'src/core/entities/core.entitiy';
+import { Column, Entity } from 'typeorm';
 
 enum UserRole {
   user,
@@ -6,10 +7,7 @@ enum UserRole {
 }
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends CoreEntity {
   @Column()
   email: string;
 
@@ -18,7 +16,4 @@ export class User {
 
   @Column({ type: 'enum', enum: UserRole })
   role: UserRole;
-
-  @Column()
-  createdAt: Date;
 }
