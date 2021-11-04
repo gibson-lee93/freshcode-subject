@@ -1,9 +1,9 @@
-// import { UserRole } from '../entities/user.entitiy';
+import { UserRole } from '../entities/user.entity';
 
 export class CreateUserDto {
   email: string;
 
   password: string;
 
-  // role: UserRole;
+  role: UserRole;
 }
