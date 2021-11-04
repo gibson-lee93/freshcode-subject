@@ -1,5 +1,5 @@
-import { CoreEntity } from 'src/core/entities/core.entitiy';
 import { Column, Entity } from 'typeorm';
+import { CoreEntity } from 'src/core/entities/core.entity';
 
 enum UserRole {
   user,
@@ -14,6 +14,6 @@ export class User extends CoreEntity {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole })
+  @Column()
   role: UserRole;
 }
