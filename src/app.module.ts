@@ -15,7 +15,7 @@ import { ItemsModule } from './items/items.module';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'freshcode',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity.{js,ts}'],
       synchronize: true,
     }),
     UsersModule,
