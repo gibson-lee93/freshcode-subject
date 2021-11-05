@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from 'src/categories/entities/category.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { Menu } from './entities/menu.entity';
 import { MenusRepository } from './menus.repository';
@@ -11,7 +12,7 @@ export class MenusService {
     private menusRepository: MenusRepository,
   ) {}
 
-  createMenu(createMenuDto: CreateMenuDto): Promise<Menu> {
-    return this.menusRepository.createMenu(createMenuDto);
+  createMenu(createMenuDto: CreateMenuDto, category: Category): Promise<Menu> {
+    return this.menusRepository.createMenu(createMenuDto, category);
   }
 }
