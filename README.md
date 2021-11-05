@@ -174,6 +174,9 @@ API를 테스트를 위한 방법을 [POSTMAN document](https://documenter.getpo
 
 ### 태그
 
+- 태그(tag)의 생성, 수정, 삭제 기능을 작업했습니다. API를 수행하기 전에 로그인을 했는지, 그리고 role이 admin 인지를 확인합니다.
+- 태그(tag)와 상품(menu)는 다대다 관계를 가집니다.
+
 ## 설치 및 실행 방법
 
 ### 공통
@@ -190,87 +193,118 @@ API를 테스트를 위한 방법을 [POSTMAN document](https://documenter.getpo
 ## 폴더 구조
 
 ```bash
-.
-├── .eslintrc.js
-├── .gitignore
-├── .prettierrc
-├── nest-cli.json
-├── package-lock.json
-├── package.json
-├── README.md
-├── src
-│   ├── app.controller.spec.ts
-│   ├── app.controller.ts
-│   ├── app.module.ts
-│   ├── app.service.ts
-│   ├── auth
-│   │   ├── auth-guard
-│   │   │   ├── jwt-auth.guard.ts
-│   │   │   └── local-auth.guard.ts
-│   │   ├── auth.controller.ts
-│   │   ├── auth.module.ts
-│   │   ├── auth.service.ts
-│   │   ├── dto
-│   │   │   └── login-user.dto.ts
-│   │   ├── get-user.decorator.ts
-│   │   └── strategies
-│   │       ├── jwt.strategy.ts
-│   │       └── local.strategy.ts
-│   ├── categories
-│   │   ├── categories.controller.ts
-│   │   ├── categories.module.ts
-│   │   ├── categories.repository.ts
-│   │   ├── categories.service.ts
-│   │   ├── dto
-│   │   │   └── create-update-category.dto.ts
-│   │   └── entities
-│   │       └── category.entity.ts
-│   ├── core
-│   │   └── entities
-│   │       └── core.entity.ts
-│   ├── items
-│   │   ├── dto
-│   │   │   ├── create-item.dto.ts
-│   │   │   └── update-item.dto.ts
-│   │   ├── entities
-│   │   │   └── item.entity.ts
-│   │   ├── items.controller.ts
-│   │   ├── items.module.ts
-│   │   ├── items.repository.ts
-│   │   └── items.service.ts
-│   ├── main.ts
-│   ├── menus
-│   │   ├── dto
-│   │   │   ├── create-menu.dto.ts
-│   │   │   └── update-menu.dto.ts
-│   │   ├── entities
-│   │   │   └── menu.entity.ts
-│   │   ├── menus.controller.ts
-│   │   ├── menus.module.ts
-│   │   ├── menus.repository.ts
-│   │   └── menus.service.ts
-│   ├── tags
-│   │   ├── entities
-│   │   │   └── tag.entity.ts
-│   │   ├── tags.controller.ts
-│   │   ├── tags.module.ts
-│   │   ├── tags.repository.ts
-│   │   └── tags.service.ts
-│   └── users
-│       ├── dto
-│       │   └── create-user.dto.ts
-│       ├── entities
-│       │   └── user.entity.ts
-│       ├── users.controller.spec.ts
-│       ├── users.controller.ts
-│       ├── users.module.ts
-│       ├── users.service.spec.ts
-│       └── users.service.ts
-├── test
-│   ├── app.e2e-spec.ts
-│   └── jest-e2e.json
-├── tsconfig.build.json
-└── tsconfig.json
+|   .eslintrc.js
+|   .gitignore
+|   .prettierrc
+|   freshcode
+|   nest-cli.json
+|   package-lock.json
+|   package.json
+|   Procfile
+|   README.md
+|   tsconfig.build.json
+|   tsconfig.json
+|
++---src
+|   |   app.controller.ts
+|   |   app.module.ts
+|   |   app.service.ts
+|   |   main.ts
+|   |
+|   +---auth
+|   |   |   auth.controller.ts
+|   |   |   auth.module.ts
+|   |   |   auth.service.spec.ts
+|   |   |   auth.service.ts
+|   |   |   get-user.decorator.ts
+|   |   |
+|   |   +---auth-guard
+|   |   |       jwt-auth.guard.ts
+|   |   |       local-auth.guard.ts
+|   |   |
+|   |   +---dto
+|   |   |       login-user.dto.ts
+|   |   |
+|   |   \---strategies
+|   |           jwt.strategy.ts
+|   |           local.strategy.ts
+|   |
+|   +---categories
+|   |   |   categories.controller.ts
+|   |   |   categories.module.ts
+|   |   |   categories.repository.ts
+|   |   |   categories.service.ts
+|   |   |
+|   |   +---dto
+|   |   |       create-update-category.dto.ts
+|   |   |
+|   |   \---entities
+|   |           category.entity.ts
+|   |
+|   +---core
+|   |   \---entities
+|   |           core.entity.ts
+|   |
+|   +---items
+|   |   |   items.controller.spec.ts
+|   |   |   items.controller.ts
+|   |   |   items.module.ts
+|   |   |   items.repository.ts
+|   |   |   items.service.spec.ts
+|   |   |   items.service.ts
+|   |   |
+|   |   +---dto
+|   |   |       create-item.dto.ts
+|   |   |       update-item.dto.ts
+|   |   |
+|   |   \---entities
+|   |           item.entity.ts
+|   |
+|   +---menus
+|   |   |   menus.controller.ts
+|   |   |   menus.module.ts
+|   |   |   menus.repository.ts
+|   |   |   menus.service.spec.ts
+|   |   |   menus.service.ts
+|   |   |
+|   |   +---dto
+|   |   |       create-menu.dto.ts
+|   |   |       relation-menu-tag.dto.ts
+|   |   |       update-menu.dto.ts
+|   |   |
+|   |   \---entities
+|   |           menu.entity.ts
+|   |
+|   +---tags
+|   |   |   tags.controller.ts
+|   |   |   tags.module.ts
+|   |   |   tags.repository.ts
+|   |   |   tags.service.ts
+|   |   |
+|   |   +---dto
+|   |   |       create-tag.dto.ts
+|   |   |       select-tag.dto.ts
+|   |   |       update-tag.dto.ts
+|   |   |
+|   |   \---entities
+|   |           tag.entity.ts
+|   |
+|   \---users
+|       |   users.controller.spec.ts
+|       |   users.controller.ts
+|       |   users.module.ts
+|       |   users.service.spec.ts
+|       |   users.service.ts
+|       |
+|       +---dto
+|       |       create-user.dto.ts
+|       |
+|       \---entities
+|               user.entity.ts
+|
+\---test
+        app.e2e-spec.ts
+        jest-e2e.json
 ```
 
 ## 개인 블로그 목록
