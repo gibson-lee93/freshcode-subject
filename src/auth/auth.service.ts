@@ -2,10 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser({ email, password }: LoginUserDto) {
     try {
@@ -17,7 +21,7 @@ export class AuthService {
           error: '올바르지 않은 이메일 또는 비밀번호 입니다.',
         };
       }
-      return { ok: true, data: { email: user.email } };
+      return { ok: true, data: { email: user.email, role: user.role } };
     } catch (error) {
       return {
         ok: false,
@@ -25,5 +29,12 @@ export class AuthService {
         error: '로그인 과정에서 에러가 발생했습니다.',
       };
     }
+  }
+
+  async login(user) {
+    const payload = { user };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

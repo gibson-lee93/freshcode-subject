@@ -4,8 +4,8 @@ import { CoreEntity } from 'src/core/entities/core.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 
 export enum UserRole {
-  user,
-  admin,
+  user = 'user',
+  admin = 'admin',
 }
 
 @Entity()
