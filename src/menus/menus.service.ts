@@ -27,4 +27,10 @@ export class MenusService {
   createMenu(createMenuDto: CreateMenuDto, category: Category): Promise<Menu> {
     return this.menusRepository.createMenu(createMenuDto, category);
   }
+
+  async deleteMenu(id: number): Promise<{ message: string }> {
+    await this.getMenuById(id);
+    await this.menusRepository.delete({ id });
+    return { message: '메뉴 삭제 완료' };
+  }
 }
