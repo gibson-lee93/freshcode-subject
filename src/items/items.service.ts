@@ -11,7 +11,7 @@ export class ItemsService {
     private itemsRepository: ItemsRepository,
   ) {}
 
-  createItem(menuId: number, createItemDto: CreateItemDto): Promise<Item> {
-    return this.itemsRepository.createItem(menuId, createItemDto);
+  createItem(createItemDto: CreateItemDto): Promise<Item> {
+    return this.itemsRepository.createItem(createItemDto);
   }
 }

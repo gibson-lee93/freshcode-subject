@@ -7,11 +7,8 @@ import { ItemsService } from './items.service';
 export class ItemsController {
   constructor(private itemsService: ItemsService) {}
 
-  @Post('/:menuId')
-  createItem(
-    @Param('menuId') menuId,
-    @Body() createItemDto: CreateItemDto,
-  ): Promise<Item> {
-    return this.itemsService.createItem(menuId, createItemDto);
+  @Post('/')
+  createItem(@Body() createItemDto: CreateItemDto): Promise<Item> {
+    return this.itemsService.createItem(createItemDto);
   }
 }

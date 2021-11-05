@@ -12,4 +12,7 @@ export class CreateItemDto {
 
   @IsBoolean()
   isSold: boolean;
+
+  @IsNumber()
+  menuId: number;
 }
