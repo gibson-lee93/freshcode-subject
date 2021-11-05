@@ -119,11 +119,11 @@ Heroku를 이용해 배포를 진행했으며, 사이트의 주소는 [https://p
 
 | 이름   | github                                          | 담당 기능                                             |
 | ------ | ----------------------------------------------- | ----------------------------------------------------- |
-| 이현준 | [lhj0621](https://github.com/lhj0621)           | 상품(menu) 조회(pagination), 생성, 수정, 삭제, 배포   |
+| 이현준(조장) | [lhj0621](https://github.com/lhj0621)      | 상품(menu) CRUD, 카테고리(category) CRUD, 배포   |
 | 김태련 | [nojamcode](https://github.com/nojamcode)       | 항목(item) 생성, 수정, 삭제, 유닛테스트               |
 | 신영학 | [yhshin0](https://github.com/yhshin0)           | 유저 생성, 로그인, 로그인 인증, 로그아웃, 유닛 테스트 |
 | 임유라 | [jiwon5304](https://github.com/jiwon5304)       | 태그 조회, 생성, 수정, 삭제                           |
-| 이기범 | [gibson-lee93](https://github.com/gibson-lee93) | 카테고리 검색, 상품(menu) 생성 및 조회                |
+| 이기범 | [gibson-lee93](https://github.com/gibson-lee93) | 상품(menu) CRUD, 카테고리(category) CRUD, 유닛 테스트             |
 | 정진산 | [chinsanchung](https://github.com/chinsanchung) | 유저 생성, 로그인, 로그인 인증, 로그아웃, 유닛 테스트 |
 
 ## 개발 환경
