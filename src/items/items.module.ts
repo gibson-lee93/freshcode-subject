@@ -3,9 +3,10 @@ import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { ItemsRepository } from './items.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MenusModule } from 'src/menus/menus.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ItemsRepository])],
+  imports: [TypeOrmModule.forFeature([ItemsRepository]), MenusModule],
   providers: [ItemsService],
   controllers: [ItemsController],
 })

@@ -18,7 +18,10 @@ export class Menu extends CoreEntity {
   @Column()
   badge: string;
 
-  @OneToMany((_type) => Item, (item) => item.menu, { eager: true })
+  @OneToMany((_type) => Item, (item) => item.menu, {
+    eager: true,
+    cascade: true,
+  })
   items: Item[];
 
   @OneToMany((_type) => Tag, (tag) => tag.menu, { eager: true })
