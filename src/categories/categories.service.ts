@@ -14,4 +14,12 @@ export class CategoriesService {
   createCategory(createCategoryDto: CreateCategoryDto): Promise<Category> {
     return this.categoriesRepository.createCategory(createCategoryDto);
   }
+
+  async getCategories(): Promise<Category[]> {
+    return await this.categoriesRepository.find({});
+  }
+
+  async getCategoryById(id: number): Promise<Category> {
+    return await this.categoriesRepository.findOne({ id });
+  }
 }
