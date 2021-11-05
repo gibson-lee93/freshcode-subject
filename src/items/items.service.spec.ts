@@ -1,8 +1,8 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { Item } from './entities/item.entity';
 import { ItemsRepository } from './items.repository';
 import { ItemsService } from './items.service';
 
@@ -43,11 +43,14 @@ describe('ItemsService', () => {
   });
 
   it('삭제 시 유효한 항목 id가 아님', async () => {
+    expect.assertions(3);
     itemsRepository.findOne.mockResolvedValue(undefined);
     try {
       const result = await service.deleteItem(1);
     } catch (e) {
       expect(e.message).toBe('유효한 항목 id가 아닙니다.');
+      expect(e.status).toBe(404);
+      expect(e).toBeInstanceOf(NotFoundException);
     }
   });
 
