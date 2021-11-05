@@ -42,4 +42,10 @@ export class CategoriesService {
       throw new InternalServerErrorException();
     }
   }
+
+  async deleteCategory(id: number): Promise<{ message: string }> {
+    await this.getCategoryById(id);
+    await this.categoriesRepository.delete({ id });
+    return { message: '카테고리 삭제 완료' };
+  }
 }
