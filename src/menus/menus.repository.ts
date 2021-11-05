@@ -2,6 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Menu } from 'src/menus/entities/menu.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { InternalServerErrorException } from '@nestjs/common';
+
 import { Category } from 'src/categories/entities/category.entity';
 @EntityRepository(Menu)
 export class MenusRepository extends Repository<Menu> {
@@ -9,13 +10,13 @@ export class MenusRepository extends Repository<Menu> {
     createMenuDto: CreateMenuDto,
     category: Category,
   ): Promise<Menu> {
-    const { name, description, isSold, badge } = createMenuDto;
+    const { name, description, isSold } = createMenuDto;
 
     const menu: Menu = this.create({
       name,
       description,
       isSold,
-      badge,
+      // badge,
       category,
     });
 
