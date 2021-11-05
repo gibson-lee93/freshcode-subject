@@ -25,7 +25,7 @@ export class ItemsService {
     }
 
     await this.itemsRepository.delete({ id: itemId });
-    return { message: '메뉴 삭제 완료' };
+    return { message: '항목 삭제 완료' };
   }
 
   async updateItem(updateItemDto: UpdateItemDto): Promise<Item> {
