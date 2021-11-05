@@ -26,6 +26,7 @@ export class Menu extends CoreEntity {
 
   @ManyToOne((_type) => Category, (category) => category.menus, {
     eager: true,
+    onDelete: 'CASCADE',
   })
   category: Category;
 }

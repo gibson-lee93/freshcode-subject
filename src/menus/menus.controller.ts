@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
 import { CategoriesService } from 'src/categories/categories.service';
 import { Category } from 'src/categories/entities/category.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
+import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Menu } from './entities/menu.entity';
 import { MenusService } from './menus.service';
 
@@ -31,6 +32,15 @@ export class MenusController {
     return this.menusService.createMenu(createMenuDto, categoryFound);
   }
 
+
+  @Patch('/:id')
+  updateMenu(
+    @Param('id') id: string,
+    @Body() updateMenuDto: UpdateMenuDto,
+  ): Promise<Menu> {
+    return this.menusService.updateMenu(Number(id), updateMenuDto);
+  }
+  
   @Delete('/:id')
   deleteMenu(@Param('id') id: string): Promise<{ message: string }> {
     return this.menusService.deleteMenu(Number(id));
