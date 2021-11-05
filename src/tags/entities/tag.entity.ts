@@ -1,5 +1,5 @@
-import { CoreEntity } from 'src/core/entities/core.entity';
-import { Menu } from 'src/menus/entities/menu.entity';
+import { CoreEntity } from '../../core/entities/core.entity';
+import { Menu } from '../../menus/entities/menu.entity';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity()

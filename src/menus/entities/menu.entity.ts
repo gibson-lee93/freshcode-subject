@@ -1,6 +1,6 @@
-import { CoreEntity } from 'src/core/entities/core.entity';
-import { Item } from 'src/items/entities/item.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
+import { CoreEntity } from '../../core/entities/core.entity';
+import { Item } from '../../items/entities/item.entity';
+import { Tag } from '../../tags/entities/tag.entity';
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 
