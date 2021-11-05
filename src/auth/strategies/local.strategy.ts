@@ -17,12 +17,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const result = await this.authService.validateUser(loginUserDto);
     if (result.ok) {
       return {
-        ok: true,
-        data: {
-          email: result.data.email,
-          role: result.data.role,
-          loginedAt: result.data.loginedAt,
-        },
+        email: result.data.email,
+        role: result.data.role,
+        loginedAt: result.data.loginedAt,
       };
     } else {
       throw new HttpException(result.error, result.htmlStatus);
