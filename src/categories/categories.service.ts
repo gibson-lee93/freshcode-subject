@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoriesRepository } from './categories.repository';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -21,5 +21,11 @@ export class CategoriesService {
 
   async getCategoryById(id: number): Promise<Category> {
     return await this.categoriesRepository.findOne({ id });
+  }
+
+  async deleteCategory(id: number): Promise<{ message: string }> {
+    await this.getCategoryById(id);
+    await this.categoriesRepository.delete({ id });
+    return { message: '카테고리 삭제 완료' };
   }
 }
