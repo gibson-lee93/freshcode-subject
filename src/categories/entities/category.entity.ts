@@ -7,6 +7,6 @@ export class Category extends CoreEntity {
   @Column()
   name: string;
 
-  @OneToMany((_type) => Menu, (menu) => menu.category, { eager: true })
+  @OneToMany((_type) => Menu, (menu) => menu.category, { eager: false })
   menus: Menu[];
 }
