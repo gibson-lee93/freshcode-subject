@@ -21,7 +21,12 @@ export class AuthService {
           error: '올바르지 않은 이메일 또는 비밀번호 입니다.',
         };
       }
-      return { ok: true, data: { email: user.email, role: user.role } };
+      const loginedAt = new Date();
+      await this.usersService.updateLoginedAt(email, loginedAt);
+      return {
+        ok: true,
+        data: { email: user.email, role: user.role, loginedAt },
+      };
     } catch (error) {
       return {
         ok: false,
@@ -36,5 +41,9 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async logout(user) {
+    await this.usersService.updateLoginedAt(user.email, null);
   }
 }

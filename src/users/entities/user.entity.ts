@@ -19,6 +19,9 @@ export class User extends CoreEntity {
   @Column()
   role: UserRole;
 
+  @Column({ type: 'datetime', nullable: true })
+  loginedAt: Date;
+
   @BeforeInsert()
   async hashPassword(): Promise<void> {
     try {

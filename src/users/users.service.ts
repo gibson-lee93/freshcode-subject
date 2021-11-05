@@ -43,4 +43,10 @@ export class UsersService {
   async findOne(email: string): Promise<User> {
     return await this.usersRepository.findOne({ email });
   }
+
+  async updateLoginedAt(email: string, loginedAt: Date): Promise<void> {
+    const user = await this.findOne(email);
+    user.loginedAt = loginedAt;
+    await this.usersRepository.save(user);
+  }
 }
