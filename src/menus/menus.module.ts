@@ -9,5 +9,6 @@ import { CategoriesModule } from 'src/categories/categories.module';
   imports: [TypeOrmModule.forFeature([MenusRepository]), CategoriesModule],
   providers: [MenusService],
   controllers: [MenusController],
+  exports: [MenusService],
 })
 export class MenusModule {}
