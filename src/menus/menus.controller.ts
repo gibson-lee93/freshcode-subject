@@ -9,18 +9,18 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user.decorator';
 import { CategoriesService } from '../categories/categories.service';
 import { Category } from '../categories/entities/category.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
-import { RelationMenuTagDto } from './dto/relation-menu-tag.dto'
+import { RelationMenuTagDto } from './dto/relation-menu-tag.dto';
 import { Menu } from './entities/menu.entity';
 import { MenusService } from './menus.service';
 import { TagsService } from 'src/tags/tags.service';
 import { Tag } from 'src/tags/entities/tag.entity';
+import { JwtAuthGuard } from 'src/auth/auth-guard/jwt-auth.guard';
 
 @Controller('menus')
 export class MenusController {
@@ -42,7 +42,7 @@ export class MenusController {
     return this.menusService.getMenuById(Number(id));
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Post()
   async createMenu(
     @Body() createMenuDto: CreateMenuDto,
@@ -56,7 +56,7 @@ export class MenusController {
     return this.menusService.createMenu(createMenuDto, categoryFound);
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   updateMenu(
     @Param('id') id: string,
@@ -67,7 +67,7 @@ export class MenusController {
     return this.menusService.updateMenu(Number(id), updateMenuDto);
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   deleteMenu(
     @Param('id') id: string,
@@ -77,7 +77,7 @@ export class MenusController {
     return this.menusService.deleteMenu(Number(id));
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Post('/:id/tag')
   async relationMenuTag(
     @Param('id') id: string,
