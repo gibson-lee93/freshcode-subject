@@ -2,7 +2,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { Menu } from 'src/menus/entities/menu.entity';
+import { Menu } from '../menus/entities/menu.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './entities/item.entity';

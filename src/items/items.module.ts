@@ -3,8 +3,8 @@ import { ItemsService } from './items.service';
 import { ItemsController } from './items.controller';
 import { ItemsRepository } from './items.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MenusModule } from 'src/menus/menus.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { MenusModule } from '../menus/menus.module';
+import { AuthModule } from '..//auth/auth.module';
 
 @Module({
   imports: [
