@@ -5,12 +5,14 @@ import { MenusRepository } from './menus.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from 'src/categories/categories.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { TagsModule } from 'src/tags/tags.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([MenusRepository]),
     CategoriesModule,
     AuthModule,
+    TagsModule,
   ],
   providers: [MenusService],
   controllers: [MenusController],

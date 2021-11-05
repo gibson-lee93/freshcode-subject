@@ -16,14 +16,18 @@ import { Category } from 'src/categories/entities/category.entity';
 import { User } from 'src/users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
+import { RelationMenuTagDto } from './dto/relation-menu-tag.dto'
 import { Menu } from './entities/menu.entity';
 import { MenusService } from './menus.service';
+import { TagsService } from 'src/tags/tags.service';
+import { Tag } from 'src/tags/entities/tag.entity';
 
 @Controller('menus')
 export class MenusController {
   constructor(
     private menusService: MenusService,
     private categoriesService: CategoriesService,
+    private tagsService: TagsService,
   ) {}
 
   @Get()
@@ -71,5 +75,20 @@ export class MenusController {
   ): Promise<{ message: string }> {
     this.menusService.checkAdmin(user);
     return this.menusService.deleteMenu(Number(id));
+  }
+
+  @UseGuards(AuthGuard())
+  @Post('/:id/tag')
+  async relationMenuTag(
+    @Param('id') id: string,
+    @Body() relationMenuTagDto: RelationMenuTagDto,
+    @GetUser() user: User,
+  ): Promise<{ message: string }> {
+    this.menusService.checkAdmin(user);
+    const tags: Tag[] = [];
+    for (const el of relationMenuTagDto.tags) {
+      tags.push(await this.tagsService.getTagById(el));
+    }
+    return this.menusService.relationMenuTag(Number(id), tags);
   }
 }
