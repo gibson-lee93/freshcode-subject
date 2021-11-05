@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../categories/entities/category.entity';
+import { Tag } from '../tags/entities/tag.entity';
 import { User } from '../users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
@@ -53,5 +54,12 @@ export class MenusService {
     await this.getMenuById(id);
     await this.menusRepository.delete({ id });
     return { message: '메뉴 삭제 완료' };
+  }
+
+  async relationMenuTag(id: number, tags: Tag[]): Promise<{ message: string }> {
+    const menu = await this.getMenuById(id);
+    menu.tags = tags;
+    await this.menusRepository.save(menu);
+    return { message: '태그 추가 완료' };
   }
 }
