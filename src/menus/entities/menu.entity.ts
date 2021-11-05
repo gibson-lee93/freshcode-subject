@@ -1,7 +1,7 @@
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { Item } from 'src/items/entities/item.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 
 @Entity()
@@ -24,12 +24,14 @@ export class Menu extends CoreEntity {
   })
   items: Item[];
 
-  @OneToMany((_type) => Tag, (tag) => tag.menu, { eager: true })
-  tags: Tag[];
-
   @ManyToOne((_type) => Category, (category) => category.menus, {
     eager: true,
     onDelete: 'CASCADE',
   })
   category: Category;
+
+  @ManyToMany(_type=>Tag, tag => tag.menus, {cascade:true})
+  @JoinTable({name:"tag_menu"})
+  tags : Tag[];
+
 }

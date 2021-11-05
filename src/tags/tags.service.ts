@@ -1,7 +1,6 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTagDto } from './dto/create-tag.dto';
-import { SelectTagDto } from './dto/select-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { Tag } from './entities/tag.entity';
 import { TagsRepository } from './tags.repository';
@@ -18,18 +17,21 @@ export class TagsService {
   }
 
   async getTagAll() : Promise<Tag[]>{
-    return this.tagsRepository.find({});
+    return this.tagsRepository.find();
   }
   
   async getTagById(id:number) : Promise<Tag>{
-    return this.tagsRepository.findOne(id);
+    const findId = this.tagsRepository.findOne(id);
+    if(!findId){
+      throw new NotFoundException("해당되는 태그가 없습니다.");
+    }
+    return findId;
   }
 
   async updateTag(id: number, updateTagDto:UpdateTagDto) : Promise<Tag>{
-    //TODO : id 유효성 검사 
     try {
-      const updateFin = await this.tagsRepository.save(updateTagDto); 
-      return updateFin; 
+      await this.tagsRepository.updateTag(updateTagDto, id); 
+      return await this.getTagById(id);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -37,11 +39,13 @@ export class TagsService {
 
   async deleteTag(id: number) : Promise<{message:string}>{
     await this.getTagById(id); 
-    if(!await this.tagsRepository.delete({id})){
-      return {message: "삭제가 완료되었습니다."}
-    }else{
-      return {message: "삭제 도중 오류가 발생하였습니다."}
+    try {
+      await this.tagsRepository.delete({id});
+      return {message:"삭제가 완료되었습니다."};
+      } catch (error) {
+      throw new InternalServerErrorException();
     }
+    
   }
 
 

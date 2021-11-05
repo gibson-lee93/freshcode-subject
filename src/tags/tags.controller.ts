@@ -25,7 +25,7 @@ export class TagsController {
 
   @Patch('/:id')
   updateTag(
-      @Param('id') id:number,
+      @Param('id') id:string,
       @Body() updateTagDto:UpdateTagDto,
     ): Promise<Tag> {
     return this.tagsService.updateTag(Number(id), updateTagDto); 
@@ -33,7 +33,7 @@ export class TagsController {
 
   @Delete('/:id')
   deleteTag(
-    @Param('id') id:number
+    @Param('id') id:string
   ): Promise<{message:string}>{
     return this.tagsService.deleteTag(Number(id)); 
   }
