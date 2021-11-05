@@ -5,8 +5,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Category } from 'src/categories/entities/category.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Category } from '../categories/entities/category.entity';
+import { User } from '../users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Menu } from './entities/menu.entity';
@@ -48,7 +48,7 @@ export class MenusService {
     await this.menusRepository.update({ id }, updateMenuDto);
     return await this.getMenuById(id);
   }
-  
+
   async deleteMenu(id: number): Promise<{ message: string }> {
     await this.getMenuById(id);
     await this.menusRepository.delete({ id });

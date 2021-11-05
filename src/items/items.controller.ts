@@ -10,7 +10,7 @@ import {
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
-import { MenusService } from 'src/menus/menus.service';
+import { MenusService } from '../menus/menus.service';
 import { UpdateItemDto } from './dto/update-item.dto';
 
 @Controller('items')
