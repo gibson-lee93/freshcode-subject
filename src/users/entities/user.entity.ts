@@ -1,16 +1,16 @@
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CoreEntity } from 'src/core/entities/core.entity';
+import { CoreEntity } from '../../core/entities/core.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 
 export enum UserRole {
-  user,
-  admin,
+  user = 'user',
+  admin = 'admin',
 }
 
 @Entity()
 export class User extends CoreEntity {
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -18,6 +18,9 @@ export class User extends CoreEntity {
 
   @Column()
   role: UserRole;
+
+  @Column({ type: 'datetime', nullable: true })
+  loginedAt: Date;
 
   @BeforeInsert()
   async hashPassword(): Promise<void> {
