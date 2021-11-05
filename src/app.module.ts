@@ -6,6 +6,7 @@ import { MenusModule } from './menus/menus.module';
 import { TagsModule } from './tags/tags.module';
 import { ItemsModule } from './items/items.module';
 import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     TagsModule,
     ItemsModule,
     AuthModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
