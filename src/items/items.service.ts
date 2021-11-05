@@ -17,6 +17,10 @@ export class ItemsService {
     return this.itemsRepository.createItem(createItemDto, menu);
   }
 
+  async deleteItem(itemId: number): Promise<{ message: string }> {
+    const item: Item = await this.itemsRepository.findOne(itemId);
+  }
+  
   async updateItem(updateItemDto: UpdateItemDto): Promise<Item> {
     const item: Item = await this.itemsRepository.findOne(updateItemDto.itemId);
     const { name, size, price, isSold } = updateItemDto;
@@ -24,6 +28,9 @@ export class ItemsService {
     if (!item) {
       throw new NotFoundException('유효한 항목 id가 아닙니다.');
     }
+    
+    await this.itemsRepository.delete({ id: itemId });
+    return { message: '메뉴 삭제 완료' };
 
     item.name = name;
     item.size = size;
