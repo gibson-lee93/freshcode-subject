@@ -10,7 +10,7 @@ export enum UserRole {
 
 @Entity()
 export class User extends CoreEntity {
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
