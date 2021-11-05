@@ -1,12 +1,15 @@
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { Menu } from 'src/menus/entities/menu.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class Category extends CoreEntity {
   @Column()
   name: string;
 
-  @ManyToOne((_type) => Menu, (menu) => menu.categories, { eager: false })
-  menu: Menu;
+  @OneToMany((_type) => Menu, (menu) => menu.category, {
+    eager: false,
+    cascade: true,
+  })
+  menus: Menu[];
 }

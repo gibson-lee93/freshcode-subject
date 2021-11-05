@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpException,
-  InternalServerErrorException,
-  Post,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Body, Controller, HttpException, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -17,7 +10,9 @@ export class UsersController {
   async createUser(@Body() createBody: CreateUserDto) {
     const result = await this.usersService.createUser(createBody);
     if (result.ok) {
-      return;
+      return {
+        message: '회원가입에 성공하였습니다.',
+      };
     } else {
       throw new HttpException(result.error, result.htmlStatus);
     }

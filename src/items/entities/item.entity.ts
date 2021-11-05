@@ -5,6 +5,9 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class Item extends CoreEntity {
   @Column()
+  name: string;
+
+  @Column()
   size: string;
 
   @Column()
@@ -13,6 +16,9 @@ export class Item extends CoreEntity {
   @Column()
   isSold: boolean;
 
-  @ManyToOne((_type) => Menu, (menu) => menu.items, { eager: false })
+  @ManyToOne((_type) => Menu, (menu) => menu.items, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   menu: Menu;
 }
