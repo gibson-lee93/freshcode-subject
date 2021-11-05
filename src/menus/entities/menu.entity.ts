@@ -1,7 +1,7 @@
-import { CoreEntity } from 'src/core/entities/core.entity';
-import { Item } from 'src/items/entities/item.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { CoreEntity } from '../../core/entities/core.entity';
+import { Item } from '../../items/entities/item.entity';
+import { Tag } from '../../tags/entities/tag.entity';
+import { Column, Entity, ManyToOne, OneToMany, ManyToMany } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 
 @Entity()
@@ -32,5 +32,4 @@ export class Menu extends CoreEntity {
 
   @ManyToMany((_type) => Tag, (tags) => tags.menus, { eager: true })
   tags: Tag[];
-
 }

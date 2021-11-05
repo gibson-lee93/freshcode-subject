@@ -1,9 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Menu } from 'src/menus/entities/menu.entity';
+import { Menu } from '../menus/entities/menu.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { InternalServerErrorException } from '@nestjs/common';
+import { Category } from '../categories/entities/category.entity';
 
-import { Category } from 'src/categories/entities/category.entity';
 @EntityRepository(Menu)
 export class MenusRepository extends Repository<Menu> {
   async createMenu(

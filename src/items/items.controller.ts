@@ -10,11 +10,11 @@ import {
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
-import { MenusService } from 'src/menus/menus.service';
+import { MenusService } from '../menus/menus.service';
 import { UpdateItemDto } from './dto/update-item.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from 'src/users/entities/user.entity';
-import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from '../users/entities/user.entity';
+import { GetUser } from '../auth/get-user.decorator';
 
 @Controller('items')
 @UseGuards(AuthGuard())
