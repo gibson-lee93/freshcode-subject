@@ -21,7 +21,7 @@ export class TagsService {
   }
   
   async getTagById(id:number) : Promise<Tag>{
-    const findId = this.tagsRepository.findOne(id);
+    const findId = await this.tagsRepository.findOne({id});
     if(!findId){
       throw new NotFoundException("해당되는 태그가 없습니다.");
     }
@@ -30,8 +30,8 @@ export class TagsService {
 
   async updateTag(id: number, updateTagDto:UpdateTagDto) : Promise<Tag>{
     try {
-      await this.tagsRepository.updateTag(updateTagDto, id); 
-      return await this.getTagById(id);
+          await this.tagsRepository.updateTag(updateTagDto, id); 
+          return await this.getTagById(id);
     } catch (error) {
       throw new InternalServerErrorException();
     }

@@ -12,11 +12,4 @@ export class UpdateTagDto{
     @IsOptional()
     menu : Menu[]; 
 
-    
-
-    
-
-    
-
-
 }

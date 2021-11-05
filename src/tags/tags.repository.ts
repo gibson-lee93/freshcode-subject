@@ -1,4 +1,3 @@
-import { Menu } from 'src/menus/entities/menu.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { Tag } from './entities/tag.entity';
 import { CreateTagDto } from './dto/create-tag.dto';
@@ -27,7 +26,6 @@ export class TagsRepository extends Repository<Tag> {
     async updateTag(updateTagDto:UpdateTagDto, id:number): Promise<void>{
         try {
             await this.update({id},updateTagDto);
-        
         } catch (error) {
             throw new InternalServerErrorException();
         }

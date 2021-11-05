@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsOptional, Min } from 'class-validator';
+import { IsNumber, IsString, IsOptional } from 'class-validator';
 
 export class SelectTagDto{
 
@@ -11,8 +11,4 @@ export class SelectTagDto{
     @IsString()
     @IsOptional()
     type : string;
-
-
-
-
 }
