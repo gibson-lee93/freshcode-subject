@@ -1,6 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
 import { CategoriesService } from 'src/categories/categories.service';
 import { Category } from 'src/categories/entities/category.entity';
+import { User } from 'src/users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Menu } from './entities/menu.entity';
@@ -23,8 +35,13 @@ export class MenusController {
     return this.menusService.getMenuById(Number(id));
   }
 
+  @UseGuards(AuthGuard())
   @Post()
-  async createMenu(@Body() createMenuDto: CreateMenuDto): Promise<Menu> {
+  async createMenu(
+    @Body() createMenuDto: CreateMenuDto,
+    @GetUser() user: User,
+  ): Promise<Menu> {
+    this.menusService.checkAdmin(user);
     const { category } = createMenuDto;
     const categoryFound: Category =
       await this.categoriesService.getCategoryByName(category);
@@ -32,17 +49,24 @@ export class MenusController {
     return this.menusService.createMenu(createMenuDto, categoryFound);
   }
 
-
+  @UseGuards(AuthGuard())
   @Patch('/:id')
   updateMenu(
     @Param('id') id: string,
     @Body() updateMenuDto: UpdateMenuDto,
+    @GetUser() user: User,
   ): Promise<Menu> {
+    this.menusService.checkAdmin(user);
     return this.menusService.updateMenu(Number(id), updateMenuDto);
   }
-  
+
+  @UseGuards(AuthGuard())
   @Delete('/:id')
-  deleteMenu(@Param('id') id: string): Promise<{ message: string }> {
+  deleteMenu(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<{ message: string }> {
+    this.menusService.checkAdmin(user);
     return this.menusService.deleteMenu(Number(id));
   }
 }
