@@ -67,6 +67,7 @@ describe('MenusService', () => {
       name: 'test name',
       description: 'test desc',
       isSold: false,
+      badge: 'new',
       category: 'SALAD',
     };
 
