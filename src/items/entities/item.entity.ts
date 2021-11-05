@@ -5,6 +5,9 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 @Entity()
 export class Item extends CoreEntity {
   @Column()
+  name: string;
+
+  @Column()
   size: string;
 
   @Column()
