@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CoreEntity } from 'src/core/entities/core.entity';
+import { CoreEntity } from '../../core/entities/core.entity';
 import { InternalServerErrorException } from '@nestjs/common';
 
 export enum UserRole {
