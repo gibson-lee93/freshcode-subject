@@ -12,12 +12,12 @@ import { Item } from './entities/item.entity';
 import { ItemsService } from './items.service';
 import { MenusService } from '../menus/menus.service';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { User } from '../users/entities/user.entity';
 import { GetUser } from '../auth/get-user.decorator';
+import { JwtAuthGuard } from '../auth/auth-guard/jwt-auth.guard';
 
 @Controller('items')
-@UseGuards(AuthGuard())
+@UseGuards(JwtAuthGuard)
 export class ItemsController {
   constructor(
     private itemsService: ItemsService,

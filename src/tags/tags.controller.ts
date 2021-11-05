@@ -12,15 +12,15 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { TagsService } from './tags.service';
 import { Tag } from './entities/tag.entity';
 import { UpdateTagDto } from './dto/update-tag.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/users/entities/user.entity';
+import { JwtAuthGuard } from 'src/auth/auth-guard/jwt-auth.guard';
 
 @Controller('tags')
 export class TagsController {
   constructor(private tagsService: TagsService) {}
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Post()
   createTag(
     @Body() createTagDto: CreateTagDto,
@@ -40,7 +40,7 @@ export class TagsController {
     return this.tagsService.getTagById(Number(id));
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Patch('/:id')
   updateTag(
     @Param('id') id: string,
@@ -51,7 +51,7 @@ export class TagsController {
     return this.tagsService.updateTag(Number(id), updateTagDto);
   }
 
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Delete('/:id')
   deleteTag(
     @Param('id') id: string,
