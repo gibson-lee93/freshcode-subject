@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -37,5 +38,15 @@ export class UsersService {
         error: '유저 생성에 에러가 발생했습니다.',
       };
     }
+  }
+
+  async findOne(email: string): Promise<User> {
+    return await this.usersRepository.findOne({ email });
+  }
+
+  async updateLoginedAt(email: string, loginedAt: Date): Promise<void> {
+    const user = await this.findOne(email);
+    user.loginedAt = loginedAt;
+    await this.usersRepository.save(user);
   }
 }
