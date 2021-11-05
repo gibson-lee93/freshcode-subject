@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { MenusModule } from './menus/menus.module';
 import { TagsModule } from './tags/tags.module';
 import { ItemsModule } from './items/items.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ItemsModule } from './items/items.module';
     MenusModule,
     TagsModule,
     ItemsModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [],
