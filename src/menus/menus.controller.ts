@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -26,8 +27,10 @@ export class MenusController {
   ) {}
 
   @Get()
-  getMenus(): Promise<Menu[]> {
-    return this.menusService.getMenus();
+  getMenus(@Query('page') page: string): Promise<Menu[]> {
+    const limit = 5;
+    const offset = page ? (Number(page) - 1) * limit : 0;
+    return this.menusService.getMenus(limit, offset);
   }
 
   @Get('/:id')
