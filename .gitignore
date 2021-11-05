@@ -1,2 +1,6 @@
 node_modules
 dist
+freshcode
+.env
+/.dist
+.DS_STORE
