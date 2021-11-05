@@ -11,6 +11,8 @@ export class CreateMenuDto {
   isSold: boolean;
 
   @IsString()
-  category: string;
+  badge: string;
 
+  @IsString()
+  category: string;
 }
