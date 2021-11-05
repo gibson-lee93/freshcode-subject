@@ -1,5 +1,10 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Like } from 'typeorm';
 import { CategoriesRepository } from './categories.repository';
 import { CreateUpdateCategoryDto } from './dto/create-update-category.dto';
 import { Category } from './entities/category.entity';
@@ -25,6 +30,16 @@ export class CategoriesService {
     const category = await this.categoriesRepository.findOne({ id });
     if (!category) {
       throw new NotFoundException('유효한 카테고리 id가 아닙니다.');
+    }
+    return category;
+  }
+
+  async getCategoryByName(name: string): Promise<Category> {
+    const category = await this.categoriesRepository.findOne({
+      name: Like(`%${name}%`),
+    });
+    if (!category) {
+      throw new NotFoundException('유효한 카테고리 name이 아닙니다.');
     }
     return category;
   }
