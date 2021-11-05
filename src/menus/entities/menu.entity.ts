@@ -25,7 +25,7 @@ export class Menu extends CoreEntity {
   tags: Tag[];
 
   @ManyToOne((_type) => Category, (category) => category.menus, {
-    eager: false,
+    eager: true,
   })
   category: Category;
 }

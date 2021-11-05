@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CategoriesService } from 'src/categories/categories.service';
 import { Category } from 'src/categories/entities/category.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
@@ -11,6 +11,16 @@ export class MenusController {
     private menusService: MenusService,
     private categoriesService: CategoriesService,
   ) {}
+
+  @Get()
+  getMenus(): Promise<Menu[]> {
+    return this.menusService.getMenus();
+  }
+
+  @Get('/:id')
+  getMenuById(@Param('id') id: string): Promise<Menu> {
+    return this.menusService.getMenuById(Number(id));
+  }
 
   @Post()
   async createMenu(@Body() createMenuDto: CreateMenuDto): Promise<Menu> {
