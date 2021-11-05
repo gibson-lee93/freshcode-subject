@@ -12,4 +12,7 @@ export class CreateMenuDto {
 
   @IsString()
   badge: string;
+
+  @IsString()
+  category: string;
 }

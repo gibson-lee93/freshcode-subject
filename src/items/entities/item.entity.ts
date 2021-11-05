@@ -16,6 +16,9 @@ export class Item extends CoreEntity {
   @Column()
   isSold: boolean;
 
-  @ManyToOne((_type) => Menu, (menu) => menu.items, { eager: false })
+  @ManyToOne((_type) => Menu, (menu) => menu.items, {
+    eager: false,
+    onDelete: 'CASCADE',
+  })
   menu: Menu;
 }

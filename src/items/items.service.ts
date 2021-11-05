@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Menu } from 'src/menus/entities/menu.entity';
 import { CreateItemDto } from './dto/create-item.dto';
 import { Item } from './entities/item.entity';
 import { ItemsRepository } from './items.repository';
@@ -11,7 +12,7 @@ export class ItemsService {
     private itemsRepository: ItemsRepository,
   ) {}
 
-  createItem(createItemDto: CreateItemDto): Promise<Item> {
-    return this.itemsRepository.createItem(createItemDto);
+  createItem(createItemDto: CreateItemDto, menu: Menu): Promise<Item> {
+    return this.itemsRepository.createItem(createItemDto, menu);
   }
 }
