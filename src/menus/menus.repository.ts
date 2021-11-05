@@ -3,19 +3,20 @@ import { Menu } from '../menus/entities/menu.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { InternalServerErrorException } from '@nestjs/common';
 import { Category } from '../categories/entities/category.entity';
+
 @EntityRepository(Menu)
 export class MenusRepository extends Repository<Menu> {
   async createMenu(
     createMenuDto: CreateMenuDto,
     category: Category,
   ): Promise<Menu> {
-    const { name, description, isSold, badge } = createMenuDto;
+    const { name, description, isSold } = createMenuDto;
 
     const menu: Menu = this.create({
       name,
       description,
       isSold,
-      badge,
+      // badge,
       category,
     });
 

@@ -25,8 +25,8 @@ export class MenusService {
     }
   }
 
-  async getMenus(): Promise<Menu[]> {
-    return await this.menusRepository.find();
+  async getMenus(limit: number, offset: number): Promise<Menu[]> {
+    return await this.menusRepository.find({ skip: offset, take: limit });
   }
 
   async getMenuById(id: number): Promise<Menu> {

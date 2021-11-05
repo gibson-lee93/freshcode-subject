@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { User, UserRole } from '../users/entities/user.entity';
 import { MenusService } from '../menus/menus.service';
 import { ItemsController } from './items.controller';
 import { ItemsService } from './items.service';
@@ -58,22 +59,55 @@ describe('ItemsController', () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
+    const createUser: User = {
+      id: 1,
+      email: 'test@gdfsadf.coffm',
+      password: '123',
+      role: UserRole.admin,
+      loginedAt: new Date(),
+      hashPassword: undefined,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+    };
     jest.spyOn(itemsService, 'createItem').mockResolvedValue(param);
 
-    const result = await controller.createItem(createDto);
+    const result = await controller.createItem(createDto, createUser);
     expect(result).toMatchObject(param);
   });
 
   it('항목 삭제', async () => {
+    const createUser: User = {
+      id: 1,
+      email: 'test@gdfsadf.coffm',
+      password: '123',
+      role: UserRole.admin,
+      loginedAt: new Date(),
+      hashPassword: undefined,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+    };
     jest
       .spyOn(itemsService, 'deleteItem')
       .mockResolvedValue({ message: '항목 삭제 완료' });
 
-    const result = await controller.deleteItem(1);
+    const result = await controller.deleteItem(1, createUser);
     expect(result).toMatchObject({ message: '항목 삭제 완료' });
   });
 
   it('항목 수정', async () => {
+    const createUser: User = {
+      id: 1,
+      email: 'test@gdfsadf.coffm',
+      password: '123',
+      role: UserRole.admin,
+      loginedAt: new Date(),
+      hashPassword: undefined,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+    };
     const updateDto = {
       name: 'test',
       size: 'm',
@@ -107,7 +141,7 @@ describe('ItemsController', () => {
     };
     jest.spyOn(itemsService, 'updateItem').mockResolvedValue(param);
 
-    const result = await controller.updateItem(updateDto);
+    const result = await controller.updateItem(updateDto, createUser);
     expect(result).toMatchObject(param);
   });
 });

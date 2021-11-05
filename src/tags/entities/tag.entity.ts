@@ -1,6 +1,6 @@
 import { CoreEntity } from '../../core/entities/core.entity';
 import { Menu } from '../../menus/entities/menu.entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity()
 export class Tag extends CoreEntity {
@@ -10,6 +10,9 @@ export class Tag extends CoreEntity {
   @Column()
   name: string;
 
-  @ManyToOne((_type) => Menu, (menu) => menu.tags, { eager: false })
-  menu: Menu;
+  @ManyToMany((_type) => Menu, (menu) => menu.tags, {
+    cascade: true,
+  })
+  @JoinTable({ name: 'tags_menus' })
+  menus: Menu[];
 }
