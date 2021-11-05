@@ -9,11 +9,10 @@ export class Tag extends CoreEntity {
 
   @Column()
   name: string;
-  
+
   @ManyToMany((_type) => Menu, (menu) => menu.tags, {
     cascade: true,
   })
   @JoinTable({ name: 'tags_menus' })
   menus: Menu[];
-  
 }
