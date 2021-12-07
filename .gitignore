@@ -3,3 +3,4 @@ dist
 .env
 /.dist
 .DS_STORE
+freshcode.db
