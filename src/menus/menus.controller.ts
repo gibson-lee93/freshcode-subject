@@ -18,9 +18,9 @@ import { UpdateMenuDto } from './dto/update-menu.dto';
 import { RelationMenuTagDto } from './dto/relation-menu-tag.dto';
 import { Menu } from './entities/menu.entity';
 import { MenusService } from './menus.service';
-import { TagsService } from 'src/tags/tags.service';
-import { Tag } from 'src/tags/entities/tag.entity';
-import { JwtAuthGuard } from 'src/auth/auth-guard/jwt-auth.guard';
+import { TagsService } from '../tags/tags.service';
+import { Tag } from '../tags/entities/tag.entity';
+import { JwtAuthGuard } from '../auth/auth-guard/jwt-auth.guard';
 
 @Controller('menus')
 export class MenusController {
@@ -48,7 +48,7 @@ export class MenusController {
     @Body() createMenuDto: CreateMenuDto,
     @GetUser() user: User,
   ): Promise<Menu> {
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
     const { category } = createMenuDto;
     const categoryFound: Category =
       await this.categoriesService.getCategoryByName(category);
@@ -63,7 +63,7 @@ export class MenusController {
     @Body() updateMenuDto: UpdateMenuDto,
     @GetUser() user: User,
   ): Promise<Menu> {
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
     return this.menusService.updateMenu(Number(id), updateMenuDto);
   }
 
@@ -73,7 +73,7 @@ export class MenusController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<{ message: string }> {
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
     return this.menusService.deleteMenu(Number(id));
   }
 
@@ -84,7 +84,7 @@ export class MenusController {
     @Body() relationMenuTagDto: RelationMenuTagDto,
     @GetUser() user: User,
   ): Promise<{ message: string }> {
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
     const tags: Tag[] = [];
     for (const el of relationMenuTagDto.tags) {
       tags.push(await this.tagsService.getTagById(el));

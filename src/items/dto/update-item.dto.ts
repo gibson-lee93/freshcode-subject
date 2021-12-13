@@ -12,10 +12,4 @@ export class UpdateItemDto {
 
   @IsBoolean()
   isSold: boolean;
-
-  @IsNumber()
-  menuId: number;
-
-  @IsNumber()
-  itemId: number;
 }

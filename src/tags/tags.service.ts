@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/users/entities/user.entity';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { Tag } from './entities/tag.entity';
@@ -18,8 +17,8 @@ export class TagsService {
     private tagsRepository: TagsRepository,
   ) {}
 
-  checkAdmin(user: User) {
-    if (user.role === 'user') {
+  checkAdmin(role: string) {
+    if (role === 'user') {
       throw new UnauthorizedException('관리자 권한입니다.');
     }
   }
@@ -33,16 +32,16 @@ export class TagsService {
   }
 
   async getTagById(id: number): Promise<Tag> {
-    const findId = await this.tagsRepository.findOne({ id });
-    if (!findId) {
+    const tag = await this.tagsRepository.findOne({ id });
+    if (!tag) {
       throw new NotFoundException('해당되는 태그가 없습니다.');
     }
-    return findId;
+    return tag;
   }
 
   async updateTag(id: number, updateTagDto: UpdateTagDto): Promise<Tag> {
     try {
-      await this.tagsRepository.updateTag(updateTagDto, id);
+      await this.tagsRepository.update({ id }, updateTagDto);
       return await this.getTagById(id);
     } catch (error) {
       throw new InternalServerErrorException();

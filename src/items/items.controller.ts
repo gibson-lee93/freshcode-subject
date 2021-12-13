@@ -24,41 +24,36 @@ export class ItemsController {
     private menusService: MenusService,
   ) {}
 
-  @Post('/')
+  @Post()
   async createItem(
     @Body() createItemDto: CreateItemDto,
     @GetUser() user: User,
   ): Promise<Item> {
     // 관리자 권한 인지 확인
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
     // menuId로 menu 조회
     const menu = await this.menusService.getMenuById(createItemDto.menuId);
-
     return this.itemsService.createItem(createItemDto, menu);
   }
 
-  @Delete('/:itemId')
-  deleteItem(
-    @Param('itemId') itemId: number,
-    @GetUser() user: User,
-  ): Promise<{ message: string }> {
-    // 관리자 권한 인지 확인
-    this.menusService.checkAdmin(user);
-
-    return this.itemsService.deleteItem(itemId);
-  }
-
-  @Patch('/')
+  @Patch('/:itemId')
   async updateItem(
+    @Param('itemId') itemId: string,
     @Body() updateItemDto: UpdateItemDto,
     @GetUser() user: User,
   ): Promise<Item> {
     // 관리자 권한 인지 확인
-    this.menusService.checkAdmin(user);
+    this.menusService.checkAdmin(user.role);
+    return this.itemsService.updateItem(Number(itemId), updateItemDto);
+  }
 
-    // menuId로 menu 조회
-    await this.menusService.getMenuById(updateItemDto.menuId);
-
-    return this.itemsService.updateItem(updateItemDto);
+  @Delete('/:itemId')
+  deleteItem(
+    @Param('itemId') itemId: string,
+    @GetUser() user: User,
+  ): Promise<{ message: string }> {
+    // 관리자 권한 인지 확인
+    this.menusService.checkAdmin(user.role);
+    return this.itemsService.deleteItem(Number(itemId));
   }
 }

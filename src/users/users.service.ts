@@ -1,7 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 
@@ -12,36 +16,28 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async createUser({ email, password, role }: CreateUserDto): Promise<{
-    ok: boolean;
-    htmlStatus?: number;
-    error?: string;
-  }> {
+  async createUser(createUserDto: CreateUserDto): Promise<{ message: string }> {
+    const { email, password, role } = createUserDto;
+    const existUser = await this.findOne(email);
+    if (existUser) {
+      throw new ConflictException('이미 가입한 이메일입니다.');
+    }
+
     try {
-      // 1. email check
-      const existUser = await this.usersRepository.findOne({ email });
-      if (existUser) {
-        return {
-          ok: false,
-          htmlStatus: 409,
-          error: '이미 가입한 이메일입니다.',
-        };
-      }
-      await this.usersRepository.save(
-        this.usersRepository.create({ email, password, role }),
-      );
-      return { ok: true };
+      const user = this.usersRepository.create({ email, password, role });
+      await this.usersRepository.save(user);
+      return { message: '회원가입이 완료되었습니다.' };
     } catch (error) {
-      return {
-        ok: false,
-        htmlStatus: 500,
-        error: '유저 생성에 에러가 발생했습니다.',
-      };
+      throw new InternalServerErrorException();
     }
   }
 
   async findOne(email: string): Promise<User> {
-    return await this.usersRepository.findOne({ email });
+    const user = await this.usersRepository.findOne({ email });
+    if (!user) {
+      throw new NotFoundException('유저 정보가 존재하지 않습니다.');
+    }
+    return user;
   }
 
   async updateLoginedAt(email: string, loginedAt: Date): Promise<void> {

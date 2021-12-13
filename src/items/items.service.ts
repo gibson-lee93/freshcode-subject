@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Menu } from '../menus/entities/menu.entity';
 import { CreateItemDto } from './dto/create-item.dto';
@@ -17,27 +21,31 @@ export class ItemsService {
     return this.itemsRepository.createItem(createItemDto, menu);
   }
 
-  async deleteItem(itemId: number): Promise<{ message: string }> {
-    const item: Item = await this.itemsRepository.findOne(itemId);
-
+  async getItemById(id: number) {
+    const item = await this.itemsRepository.findOne(id);
     if (!item) {
-      throw new NotFoundException('유효한 항목 id가 아닙니다.');
+      throw new NotFoundException('해당 id의 item을 찾지 못하였습니다.');
     }
-
-    await this.itemsRepository.delete({ id: itemId });
-    return { message: '항목 삭제 완료' };
+    return item;
   }
 
-  async updateItem(updateItemDto: UpdateItemDto): Promise<Item> {
-    const item: Item = await this.itemsRepository.findOne(updateItemDto.itemId);
-    const { name, size, price, isSold } = updateItemDto;
+  async updateItem(id: number, updateItemDto: UpdateItemDto): Promise<Item> {
+    try {
+      await this.itemsRepository.update({ id }, updateItemDto);
+      return await this.getItemById(id);
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
+  }
 
-    item.name = name;
-    item.size = size;
-    item.price = price;
-    item.isSold = isSold;
+  async deleteItem(id: number): Promise<{ message: string }> {
+    await this.getItemById(id);
 
-    await this.itemsRepository.save(item);
-    return item;
+    try {
+      await this.itemsRepository.delete({ id });
+      return { message: '항목 삭제 완료' };
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 }
