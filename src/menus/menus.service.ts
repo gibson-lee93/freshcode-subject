@@ -8,7 +8,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '../categories/entities/category.entity';
 import { Tag } from '../tags/entities/tag.entity';
-import { User } from '../users/entities/user.entity';
 import { CreateMenuDto } from './dto/create-menu.dto';
 import { UpdateMenuDto } from './dto/update-menu.dto';
 import { Menu } from './entities/menu.entity';
