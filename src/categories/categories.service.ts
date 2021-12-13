@@ -48,11 +48,9 @@ export class CategoriesService {
     id: number,
     createUpdateCategoryDto: CreateUpdateCategoryDto,
   ): Promise<Category> {
-    const category = await this.getCategoryById(id);
-    const { name } = createUpdateCategoryDto;
-    category.name = name;
     try {
-      return await this.categoriesRepository.save(category);
+      await this.categoriesRepository.update({ id }, createUpdateCategoryDto);
+      return await this.getCategoryById(id);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -60,7 +58,11 @@ export class CategoriesService {
 
   async deleteCategory(id: number): Promise<{ message: string }> {
     await this.getCategoryById(id);
-    await this.categoriesRepository.delete({ id });
-    return { message: '카테고리 삭제 완료' };
+    try {
+      await this.categoriesRepository.delete({ id });
+      return { message: '카테고리 삭제 완료' };
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 }
