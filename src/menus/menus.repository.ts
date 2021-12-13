@@ -10,13 +10,8 @@ export class MenusRepository extends Repository<Menu> {
     createMenuDto: CreateMenuDto,
     category: Category,
   ): Promise<Menu> {
-    const { name, description, badge, isSold } = createMenuDto;
-
     const menu: Menu = this.create({
-      name,
-      description,
-      isSold,
-      badge,
+      ...createMenuDto,
       category,
     });
 

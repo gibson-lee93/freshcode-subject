@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -7,14 +7,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async createUser(@Body() createBody: CreateUserDto) {
-    const result = await this.usersService.createUser(createBody);
-    if (result.ok) {
-      return {
-        message: '회원가입에 성공하였습니다.',
-      };
-    } else {
-      throw new HttpException(result.error, result.htmlStatus);
-    }
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<{ message: string }> {
+    return await this.usersService.createUser(createUserDto);
   }
 }

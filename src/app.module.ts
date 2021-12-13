@@ -18,7 +18,7 @@ import { AppService } from './app.service';
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'freshcode',
+      database: 'freshcode.db',
       entities: [__dirname + '/**/entities/*.entity{.ts,.js}'],
       synchronize: true,
     }),

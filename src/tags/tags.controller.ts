@@ -12,9 +12,9 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { TagsService } from './tags.service';
 import { Tag } from './entities/tag.entity';
 import { UpdateTagDto } from './dto/update-tag.dto';
-import { GetUser } from 'src/auth/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
-import { JwtAuthGuard } from 'src/auth/auth-guard/jwt-auth.guard';
+import { GetUser } from '../auth/get-user.decorator';
+import { User } from '../users/entities/user.entity';
+import { JwtAuthGuard } from '../auth/auth-guard/jwt-auth.guard';
 
 @Controller('tags')
 export class TagsController {
@@ -26,7 +26,7 @@ export class TagsController {
     @Body() createTagDto: CreateTagDto,
     @GetUser() user: User,
   ): Promise<Tag> {
-    this.tagsService.checkAdmin(user);
+    this.tagsService.checkAdmin(user.role);
     return this.tagsService.createTag(createTagDto);
   }
 
@@ -47,7 +47,7 @@ export class TagsController {
     @Body() updateTagDto: UpdateTagDto,
     @GetUser() user: User,
   ): Promise<Tag> {
-    this.tagsService.checkAdmin(user);
+    this.tagsService.checkAdmin(user.role);
     return this.tagsService.updateTag(Number(id), updateTagDto);
   }
 
@@ -57,7 +57,7 @@ export class TagsController {
     @Param('id') id: string,
     @GetUser() user: User,
   ): Promise<{ message: string }> {
-    this.tagsService.checkAdmin(user);
+    this.tagsService.checkAdmin(user.role);
     return this.tagsService.deleteTag(Number(id));
   }
 }
